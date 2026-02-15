@@ -1,0 +1,92 @@
+<div class="solicitud-form">
+  <form [formGroup]="form" (ngSubmit)="handleSubmit()">
+    <div class="form-grid">
+      <!-- Titulo -->
+      <div class="form-field">
+        <label for="titulo">Título *</label>
+        <input
+          id="titulo"
+          type="text"
+          pInputText
+          formControlName="titulo"
+          placeholder="Ingrese el título de la solicitud"
+          [class.p-invalid]="isFieldInvalid('titulo')"
+        />
+        @if (isFieldInvalid('titulo')) {
+          <small class="p-error">{{ getErrorMessage('titulo') }}</small>
+        }
+      </div>
+
+      <!-- Descripcion -->
+      <div class="form-field">
+        <label for="descripcion">Descripción *</label>
+        <textarea
+          id="descripcion"
+          pTextarea
+          formControlName="descripcion"
+          placeholder="Describa detalladamente la solicitud"
+          rows="5"
+          [class.p-invalid]="isFieldInvalid('descripcion')"
+        ></textarea>
+        @if (isFieldInvalid('descripcion')) {
+          <small class="p-error">{{ getErrorMessage('descripcion') }}</small>
+        }
+      </div>
+
+      <div class="form-field">
+        <label for="estado">Estado *</label>
+        <p-select
+          inputId="estado"
+          formControlName="estado"
+          [options]="estadoOptions"
+          placeholder="Seleccione el estado"
+          [showClear]="false"
+          [style]="{ width: '100%' }"
+        />
+      </div>
+
+      <div class="form-field">
+        <label for="prioridad">Prioridad *</label>
+        <p-select
+          inputId="prioridad"
+          formControlName="prioridad"
+          [options]="prioridadOptions"
+          placeholder="Seleccione la prioridad"
+          [showClear]="false"
+          [style]="{ width: '100%' }"
+        />
+      </div>
+
+      <!-- Solicitante -->
+      <div class="form-field">
+        <label for="solicitante">Solicitante *</label>
+        <input
+          id="solicitante"
+          type="text"
+          pInputText
+          formControlName="solicitante"
+          placeholder="Ingrese el solicitante"
+          [class.p-invalid]="isFieldInvalid('solicitante')"
+        />
+        @if (isFieldInvalid('solicitante')) {
+          <small class="p-error">{{ getErrorMessage('solicitante') }}</small>
+        }
+      </div>
+    </div>
+
+    <!-- Acciones -->
+    <div class="form-actions">
+      <p-button
+        label="Cancelar"
+        severity="secondary"
+        (onClick)="handleCancel()"
+        [outlined]="true"
+      />
+      <p-button
+        label="{{ isEditMode() ? 'Actualizar' : 'Crear' }}"
+        type="submit"
+        [disabled]="form.invalid"
+      />
+    </div>
+  </form>
+</div>

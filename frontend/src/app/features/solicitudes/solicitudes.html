@@ -1,0 +1,224 @@
+<div class="solicitudes-container">
+  <p-toast />
+  <p-confirmDialog />
+
+  <!-- Header -->
+  <div class="page-header">
+    <h1>Gestión de Solicitudes</h1>
+    <p-button
+      label="Nueva Solicitud"
+      icon="pi pi-plus"
+      (onClick)="openCreateDialog()"
+    />
+  </div>
+
+  <!-- Panel de filtros -->
+  <div class="filters-panel">
+    <h3>Filtros</h3>
+    <div class="filters-grid">
+      <!-- Titulo Filtro -->
+      <div class="filter-field">
+        <label for="filtro-titulo">Título</label>
+        <input
+          id="filtro-titulo"
+          type="text"
+          pInputText
+          placeholder="Buscar por título..."
+          [ngModel]="filtroTitulo()"
+          (ngModelChange)="filtroTitulo.set($event); applyFilters()"
+        />
+      </div>
+
+      <!-- Estado Filtro -->
+      <div class="filter-field">
+        <label for="filtro-estado">Estado</label>
+        <p-select
+          inputId="filtro-estado"
+          [ngModel]="filtroEstado()"
+          (ngModelChange)="filtroEstado.set($event); applyFilters()"
+          [options]="estadoOptions"
+          optionLabel="label"
+          optionValue="value"
+          placeholder="Todos los estados"
+          [style]="{ width: '100%' }"
+        />
+      </div>
+
+      <!-- Prioridad Filtro -->
+      <div class="filter-field">
+        <label for="filtro-prioridad">Prioridad</label>
+        <p-select
+          inputId="filtro-prioridad"
+          [ngModel]="filtroPrioridad()"
+          (ngModelChange)="filtroPrioridad.set($event); applyFilters()"
+          [options]="prioridadOptions"
+          optionLabel="label"
+          optionValue="value"
+          placeholder="Todas las prioridades"
+          [style]="{ width: '100%' }"
+        />
+      </div>
+
+      <!-- Fecha Desde Filtro -->
+      <div class="filter-field">
+        <label for="filtro-fecha-desde">Fecha Desde</label>
+        <p-datepicker
+          inputId="filtro-fecha-desde"
+          [ngModel]="filtroFechaDesde()"
+          (ngModelChange)="filtroFechaDesde.set($event); applyFilters()"
+          dateFormat="dd/mm/yy"
+          placeholder="Seleccionar fecha"
+          [showClear]="true"
+          [style]="{ width: '100%' }"
+        />
+      </div>
+
+      <!-- Fecha Hasta Filtro -->
+      <div class="filter-field">
+        <label for="filtro-fecha-hasta">Fecha Hasta</label>
+        <p-datepicker
+          inputId="filtro-fecha-hasta"
+          [ngModel]="filtroFechaHasta()"
+          (ngModelChange)="filtroFechaHasta.set($event); applyFilters()"
+          dateFormat="dd/mm/yy"
+          placeholder="Seleccionar fecha"
+          [showClear]="true"
+          [style]="{ width: '100%' }"
+        />
+      </div>
+
+      <!-- Boton Limpiar Filtros -->
+      <div class="filter-field filter-actions">
+        <p-button
+          label="Limpiar Filtros"
+          icon="pi pi-filter-slash"
+          severity="secondary"
+          [outlined]="true"
+          (onClick)="clearFilters()"
+        />
+      </div>
+    </div>
+  </div>
+
+  <!-- Tabla -->
+  <div class="table-container">
+    <p-table
+      [value]="solicitudes()"
+      [loading]="loading()"
+      [paginator]="true"
+      [rows]="5"
+      [rowsPerPageOptions]="[5, 10, 20, 50]"
+      [showCurrentPageReport]="true"
+      currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} solicitudes"
+      [tableStyle]="{ 'min-width': '50rem' }"
+      styleClass="p-datatable-striped"
+    >
+      <ng-template pTemplate="header">
+        <tr>
+          <th pSortableColumn="id">
+            ID <p-sortIcon field="id" />
+          </th>
+          <th pSortableColumn="titulo">
+            Título <p-sortIcon field="titulo" />
+          </th>
+          <th pSortableColumn="solicitante">
+            Solicitante <p-sortIcon field="solicitante" />
+          </th>
+          <th pSortableColumn="estado">
+            Estado <p-sortIcon field="estado" />
+          </th>
+          <th pSortableColumn="prioridad">
+            Prioridad <p-sortIcon field="prioridad" />
+          </th>
+          <th pSortableColumn="fechaCreacion">
+            Fecha Creación <p-sortIcon field="fechaCreacion" />
+          </th>
+          <th>Acciones</th>
+        </tr>
+      </ng-template>
+
+      <ng-template pTemplate="body" let-solicitud>
+        <tr>
+          <td>{{ solicitud.id }}</td>
+          <td>
+            <strong>{{ solicitud.titulo }}</strong>
+          </td>
+          <td>{{ solicitud.solicitante }}</td>
+          <td>
+            <p-tag
+              [value]="getEstadoLabel(solicitud.estado)"
+              [severity]="getEstadoSeverity(solicitud.estado)"
+            />
+          </td>
+          <td>
+            <p-tag
+              [value]="getPrioridadLabel(solicitud.prioridad)"
+              [severity]="getPrioridadSeverity(solicitud.prioridad)"
+            />
+          </td>
+          <td>{{ solicitud.fechaCreacion | date: 'dd/MM/yyyy' }}</td>
+          <td>
+            <div class="action-buttons">
+              <p-button
+                icon="pi pi-eye"
+                [rounded]="true"
+                [text]="true"
+                severity="info"
+                (onClick)="viewDetail(solicitud)"
+                pTooltip="Ver detalle"
+                tooltipPosition="top"
+              />
+              <p-button
+                icon="pi pi-pencil"
+                [rounded]="true"
+                [text]="true"
+                severity="success"
+                (onClick)="openEditDialog(solicitud)"
+                pTooltip="Editar"
+                tooltipPosition="top"
+              />
+              <p-button
+                icon="pi pi-trash"
+                [rounded]="true"
+                [text]="true"
+                severity="danger"
+                (onClick)="deleteSolicitud(solicitud)"
+                pTooltip="Eliminar"
+                tooltipPosition="top"
+              />
+            </div>
+          </td>
+        </tr>
+      </ng-template>
+
+      <ng-template pTemplate="emptymessage">
+        <tr>
+          <td colspan="7" class="empty-message">
+            <div class="empty-state">
+              <i class="pi pi-inbox" style="font-size: 3rem"></i>
+              <p>No se encontraron solicitudes</p>
+            </div>
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+
+  <!-- Form Dialog -->
+  <p-dialog
+    [header]="selectedSolicitud() ? 'Editar Solicitud' : 'Nueva Solicitud'"
+    [(visible)]="showFormDialog"
+    [modal]="true"
+    [style]="{ width: '50vw' }"
+    [breakpoints]="{ '960px': '75vw', '640px': '95vw' }"
+    [draggable]="false"
+    [resizable]="false"
+  >
+    <app-solicitud-form
+      [solicitud]="selectedSolicitud()"
+      (onSubmit)="handleFormSubmit($event)"
+      (onCancel)="closeFormDialog()"
+    />
+  </p-dialog>
+</div>
+

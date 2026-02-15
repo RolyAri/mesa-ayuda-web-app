@@ -1,0 +1,101 @@
+<div class="solicitud-detail">
+  <p-confirmDialog />
+
+  @if (loading()) {
+    <div class="loading">
+      <i class="pi pi-spin pi-spinner" style="font-size: 2rem"></i>
+      <p>Cargando...</p>
+    </div>
+  } @else if (solicitud(); as sol) {
+    <!-- Acciones Header -->
+    <div class="detail-header">
+      <p-button
+        label="Volver"
+        icon="pi pi-arrow-left"
+        severity="secondary"
+        [outlined]="true"
+        (onClick)="goBack()"
+      />
+      <div class="actions">
+        <p-button
+          label="Editar"
+          icon="pi pi-pencil"
+          severity="info"
+          (onClick)="editSolicitud()"
+        />
+        <p-button
+          label="Eliminar"
+          icon="pi pi-trash"
+          severity="danger"
+          (onClick)="deleteSolicitud()"
+        />
+      </div>
+    </div>
+
+    <!-- Detalle Card -->
+    <p-card>
+      <ng-template pTemplate="header">
+        <div class="card-header">
+          <h2>{{ sol.titulo }}</h2>
+          <div class="badges">
+            <p-tag
+              [value]="getEstadoLabel(sol.estado)"
+              [severity]="getEstadoSeverity(sol.estado)"
+            />
+            <p-tag
+              [value]="getPrioridadLabel(sol.prioridad)"
+              [severity]="getPrioridadSeverity(sol.prioridad)"
+            />
+          </div>
+        </div>
+      </ng-template>
+
+      <div class="detail-content">
+        <div class="detail-section">
+          <h3>Información General</h3>
+          <div class="detail-grid">
+            <div class="detail-item">
+              <span class="label">ID:</span>
+              <span class="value">{{ sol.id }}</span>
+            </div>
+            <div class="detail-item">
+              <span class="label">Solicitante:</span>
+              <span class="value">{{ sol.solicitante }}</span>
+            </div>
+            <div class="detail-item">
+              <span class="label">Estado:</span>
+              <span class="value">{{ getEstadoLabel(sol.estado) }}</span>
+            </div>
+            <div class="detail-item">
+              <span class="label">Prioridad:</span>
+              <span class="value">{{ getPrioridadLabel(sol.prioridad) }}</span>
+            </div>
+            <div class="detail-item">
+              <span class="label">Fecha de Creación:</span>
+              <span class="value">{{ sol.fechaCreacion | date: 'dd/MM/yyyy HH:mm' }}</span>
+            </div>
+            <div class="detail-item">
+              <span class="label">Última Actualización:</span>
+              <span class="value">{{ sol.fechaActualizacion | date: 'dd/MM/yyyy HH:mm' }}</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="detail-section">
+          <h3>Descripción</h3>
+          <p class="description">{{ sol.descripcion }}</p>
+        </div>
+      </div>
+    </p-card>
+  } @else {
+    <div class="not-found">
+      <i class="pi pi-exclamation-circle" style="font-size: 3rem"></i>
+      <h2>Solicitud no encontrada</h2>
+      <p-button
+        label="Volver al listado"
+        icon="pi pi-arrow-left"
+        (onClick)="goBack()"
+      />
+    </div>
+  }
+</div>
