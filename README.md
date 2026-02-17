@@ -132,3 +132,49 @@ Disponible en:
 3.  Iniciar backend\
 4.  Iniciar frontend
 
+# ☁️ Despliegue en Azure
+
+Este sistema se encuentra desplegado utilizando servicios PaaS de Microsoft Azure para garantizar escalabilidad y bajo mantenimiento.
+
+## 1. 🗄️ Base de Datos: Azure SQL
+1.  **Instancia:** Se creó un servidor lógico de Azure SQL y una base de datos SQL.
+2.  **Seguridad:** Se configuró una regla de firewall en el servidor para permitir el acceso desde la dirección IP local.
+3.  **Provisionamiento:** El esquema inicial se cargó mediante **SQL Server Management Studio (SSMS)** ejecutando los scripts ubicados en `/database`.
+
+## 2. 🖥️ Frontend: Azure Static Web Apps (SWA)
+El despliegue del frontend se realiza mediante la CLI de Azure SWA:
+1.  **Build:** Generar los archivos de producción:
+    ```bash
+    ng build
+    ```
+2.  **Instalación de herramientas:**
+    ```bash
+    npm install -g @azure/static-web-apps-cli
+    ```
+3.  **Despliegue:** Utilizando el token de implementación obtenido desde el portal de Azure:
+    ```bash
+    swa deploy ./dist/frontend/browser --deployment-token <TU_TOKEN> --env production
+    ```
+
+## 3. ⚙️ Backend: Azure App Service (Spring Boot)
+El backend se despliega directamente mediante el plugin de Maven para Azure.
+
+### Configuración de CORS
+Se actualizó la clase `CorsConfig.java` para permitir las peticiones desde la URL de la Static Web App:
+```java
+@Configuration
+public class CorsConfig {
+    @Bean
+    public WebMvcConfigurer corsConfiguration() {
+        return new WebMvcConfigurer() {
+            @Override
+            public void addCorsMappings(CorsRegistry registry) {
+                registry.addMapping("/**") 
+                        .allowedOrigins("[https://tu-app-frontend.azurestaticapps.net/](https://tu-app-frontend.azurestaticapps.net/)")
+                        .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS") 
+                        .allowedHeaders("*")
+                        .allowCredentials(true);
+            }
+        };
+    }
+}
