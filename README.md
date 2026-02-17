@@ -5,6 +5,17 @@ Sistema web compuesto por:
 -   🖥 **Frontend:** Angular 20\
 -   ⚙ **Backend:** Spring Boot\
 -   🗄 **Base de Datos:** SQL Server
+  
+Listado de Solicitudes
+<img width="1454" height="843" alt="image" src="https://github.com/user-attachments/assets/00422f92-a635-4a77-bf7a-859e318c0da8" />
+Detalle de Solicitud
+<img width="1193" height="531" alt="image" src="https://github.com/user-attachments/assets/176fc177-9f76-41f6-b21d-4056f0587074" />
+Editar Solicitud
+<img width="1447" height="845" alt="image" src="https://github.com/user-attachments/assets/fece597e-4696-441c-97ee-22cb64a1b271" />
+Crear Solicitud
+<img width="1657" height="631" alt="image" src="https://github.com/user-attachments/assets/22d18a87-59a0-48e6-9e29-1ff2c3ecfae2" />
+<img width="1657" height="631" alt="image" src="https://github.com/user-attachments/assets/c3fa61fb-0dc3-4d12-8ca1-29f600b57caa" />
+
 
 ------------------------------------------------------------------------
 
