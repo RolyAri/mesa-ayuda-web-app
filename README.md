@@ -160,7 +160,7 @@ El despliegue del frontend se realiza mediante la CLI de Azure SWA:
 El backend se despliega directamente mediante el plugin de Maven para Azure.
 
 ### Configuración de CORS
-Se actualizó la clase `CorsConfig.java` para permitir las peticiones desde la URL de la Static Web App:
+Se actualiza la clase `CorsConfig.java` para permitir las peticiones desde la URL de la Static Web App:
 ```java
 @Configuration
 public class CorsConfig {
@@ -178,3 +178,21 @@ public class CorsConfig {
         };
     }
 }
+```
+### Despliegue con Maven
+1.  Plugin en pom.xml: Se añadió el plugin de Azure Web App:
+```
+<plugin>
+    <groupId>com.microsoft.azure</groupId>
+    <artifactId>azure-webapp-maven-plugin</artifactId>
+    <version>2.9.0</version>
+</plugin>
+```
+2.  Configuración y Deployment:
+```
+# Configurar parámetros (Nombre de app, Grupo de recursos, Región, etc.)
+mvn azure-webapp:config
+
+# Ejecutar el despliegue
+mvn azure-webapp:deploy
+```
