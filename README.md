@@ -13,7 +13,7 @@ Detalle de Solicitud
 Editar Solicitud
 <img width="1447" height="845" alt="image" src="https://github.com/user-attachments/assets/fece597e-4696-441c-97ee-22cb64a1b271" />
 Crear Solicitud
-<img width="1657" height="631" alt="image" src="https://github.com/user-attachments/assets/22d18a87-59a0-48e6-9e29-1ff2c3ecfae2" />
+<img width="1488" height="864" alt="image" src="https://github.com/user-attachments/assets/a4402092-3a90-4d66-a6f4-6473f8c0acf0" />
 <img width="1657" height="631" alt="image" src="https://github.com/user-attachments/assets/c3fa61fb-0dc3-4d12-8ca1-29f600b57caa" />
 
 
