@@ -17,7 +17,6 @@ Crear Solicitud
 
 <img width="1657" height="631" alt="image" src="https://github.com/user-attachments/assets/c3fa61fb-0dc3-4d12-8ca1-29f600b57caa" />
 
-
 ------------------------------------------------------------------------
 
 # 📁 Estructura del Proyecto
@@ -99,6 +98,45 @@ spring.jpa.properties.hibernate.format_sql=true
 Backend disponible en:
 
     http://localhost:8080
+
+# 📌 Endpoints - Solicitudes
+
+**Base URL:** `/solicitudes`
+
+Todos los endpoints retornan una respuesta estandarizada mediante
+`ApiResponse` con la siguiente estructura:
+
+``` json
+{
+  "success": true,
+  "message": "Mensaje descriptivo",
+  "data": {},
+  "timestamp": ""
+}
+```
+
+------------------------------------------------------------------------
+
+## 📋 Lista de Endpoints
+
+-   **GET** `/solicitudes`\
+    Obtiene la lista completa de solicitudes.
+
+-   **GET** `/solicitudes/{id}`\
+    Obtiene una solicitud específica por su ID.
+
+-   **GET** `/solicitudes?estado={estado}&prioridad={prioridad}`\
+    Filtra solicitudes por estado y prioridad.
+
+-   **POST** `/solicitudes`\
+    Crea una nueva solicitud.
+
+-   **PUT** `/solicitudes/{id}`\
+    Actualiza una solicitud existente.
+
+-   **DELETE** `/solicitudes/{id}`\
+    Elimina una solicitud por su ID.
+
 
 ------------------------------------------------------------------------
 
